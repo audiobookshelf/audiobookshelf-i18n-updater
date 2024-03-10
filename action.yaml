@@ -9,4 +9,4 @@ inputs:
 
 runs:
   using: 'node20'
-  main: 'copy_keys.js'
+  main: 'dist/index.js'
