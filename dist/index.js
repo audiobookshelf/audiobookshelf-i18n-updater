@@ -26610,6 +26610,8 @@ function updateJSONFiles(baseFileName, directory) {
 
     let isSorted = true;
 
+    console.log("In updateJSONFiles");
+
     // Sort the base data alphabetically by key (case insensitive)
     const sortedBaseData = {};
     Object.keys(baseData)
@@ -26657,21 +26659,20 @@ function updateJSONFiles(baseFileName, directory) {
     }
 }
 
-try {
-    const directory = core.getInput('directory');
-    
-    console.log("Printing the directory");
-    console.log(directory);
+const directory = core.getInput('directory');
 
-    const resultCode = updateJSONFiles(`en-us.json`, directory);
-    
-    // Check if keys were not in alphabetical order
-    if (resultCode == 1) {
-        core.setFailed('Keys are not alphabetized');
-    }
-} catch (error) {
-    core.setFailed(error.message);
+console.log("Printing the directory");
+console.log(directory);
+
+const resultCode = updateJSONFiles(`en-us.json`, directory);
+console.log("Result Code: ", resultCode);
+
+// Check if keys were not in alphabetical order
+if (resultCode == 1) {
+    console.log("Files are not alphabetized");
+    core.setFailed('Keys are not alphabetized');
 }
+
 })();
 
 module.exports = __webpack_exports__;
