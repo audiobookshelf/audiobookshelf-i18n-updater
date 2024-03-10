@@ -26622,7 +26622,7 @@ function updateJSONFiles(baseFileName, directory) {
 
     fs.readdirSync(directory).forEach(filename => {
         const filePath = path.join(directory, filename);
-        if (filename.endsWith('.json') && filename !== baseFileName) {
+        if (filename.endsWith('.json')) {
             let otherData = loadJSONFile(filePath);
 
             // Check if keys are in alphabetical order
@@ -26633,6 +26633,9 @@ function updateJSONFiles(baseFileName, directory) {
                     break;
                 }
             }
+        }
+        if (filename.endsWith('.json') && filename !== baseFileName) {
+            let otherData = loadJSONFile(filePath);
 
             // Copy missing fields from the base data
             for (const key in sortedBaseData) {
