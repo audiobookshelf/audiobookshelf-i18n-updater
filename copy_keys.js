@@ -68,7 +68,7 @@ function updateJSONFiles(baseFileName, directory) {
 
 try {
     const baseFileName = 'en-us.json';
-    const directory = core.get_input('directory');
+    const directory = process.env.DIRECTORY;
     
     // Example usage:
     const resultCode = updateJSONFiles(baseFileName, directory);
