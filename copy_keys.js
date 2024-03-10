@@ -71,9 +71,11 @@ try {
     console.log(directory);
 
     const resultCode = updateJSONFiles(`en-us.json`, directory);
-    
+    console.log("Result Code: ", resultCode);
+
     // Check if keys were not in alphabetical order
     if (resultCode == 1) {
+        console.log("Files are not alphabetized");
         core.setFailed('Keys are not alphabetized');
     }
 } catch (error) {
