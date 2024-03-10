@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const core = require('@actions/core');
 
 function loadJSONFile(filePath) {
     const data = fs.readFileSync(filePath, 'utf8');
@@ -63,7 +64,8 @@ function updateJSONFiles(baseFileName, directory) {
     }
 }
 
-const directory = process.env.INPUT_directory;
+//const directory = process.env.INPUT_directory;
+const directory = core.getInput('directory');
 
 // Example usage:
 console.log("Printing the directory");
