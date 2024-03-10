@@ -5,7 +5,10 @@ inputs:
   directory:
     description: 'The directory containing the JSON files'
     required: true
+    default: 'strings/'
 
 runs:
   using: 'node20'
   main: 'copy_keys.js'
+  args:
+    - ${{inputs.directory}}
