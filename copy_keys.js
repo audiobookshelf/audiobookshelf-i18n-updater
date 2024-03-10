@@ -64,15 +64,18 @@ function updateJSONFiles(baseFileName, directory) {
     }
 }
 
-//const directory = process.env.INPUT_directory;
-const directory = core.getInput('directory');
+try {
+    const directory = core.getInput('directory');
+    
+    console.log("Printing the directory");
+    console.log(directory);
 
-// Example usage:
-console.log("Printing the directory");
-console.log(directory);
-const resultCode = updateJSONFiles(`en-us.json`, directory);
-
-// Check if keys were not in alphabetical order
-if (resultCode == 1) {
-    process.exit(1);
+    const resultCode = updateJSONFiles(`en-us.json`, directory);
+    
+    // Check if keys were not in alphabetical order
+    if (resultCode == 1) {
+        core.setFailed('Keys are not alphabetized');
+    }
+} catch (error) {
+    core.setFailed(error.message);
 }
