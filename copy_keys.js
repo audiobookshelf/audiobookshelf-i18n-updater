@@ -17,6 +17,8 @@ function updateJSONFiles(baseFileName, directory) {
 
     let isSorted = true;
 
+    console.log("In updateJSONFiles");
+
     // Sort the base data alphabetically by key (case insensitive)
     const sortedBaseData = {};
     Object.keys(baseData)
