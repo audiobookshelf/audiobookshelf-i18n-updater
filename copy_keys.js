@@ -1,6 +1,3 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-
 const fs = require('fs');
 const path = require('path');
 
@@ -66,18 +63,13 @@ function updateJSONFiles(baseFileName, directory) {
     }
 }
 
-try {
-    const baseFileName = 'en-us.json';
-    const directory = process.env.DIRECTORY;
-    
-    // Example usage:
-    const resultCode = updateJSONFiles(baseFileName, directory);
+const baseFileName = 'en-us.json';
+const directory = process.env.DIRECTORY;
 
-    // Check if keys were not in alphabetical order
-    if (resultCode == 1) {
-        core.setFailed('Keys not in alphabetical order');
-    }
-    
-} catch (error) {
-    core.setFailed(error.message);
+// Example usage:
+const resultCode = updateJSONFiles(baseFileName, directory);
+
+// Check if keys were not in alphabetical order
+if (resultCode == 1) {
+    process.exit(1);
 }
