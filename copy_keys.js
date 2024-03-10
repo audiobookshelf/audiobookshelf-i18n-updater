@@ -64,7 +64,7 @@ function updateJSONFiles(baseFileName, directory) {
 }
 
 const baseFileName = 'en-us.json';
-const directory = process.env.DIRECTORY;
+const directory = process.env.directory;
 
 // Example usage:
 const resultCode = updateJSONFiles(baseFileName, directory);
