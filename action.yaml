@@ -1,0 +1,11 @@
+name: Update JSON translation files
+description: Update language files based on the `en-us.json` file
+
+inputs:
+  directory:
+    description: 'The directory containing the JSON files'
+    required: true
+
+runs:
+  using: 'node20'
+  main: 'copy_keys.js'
