@@ -1,3 +1,6 @@
+const core = require('@actions/core');
+const github = require('@actions/github');
+
 const fs = require('fs');
 const path = require('path');
 
@@ -14,6 +17,8 @@ function updateJSONFiles(baseFileName, directory) {
     const baseFilePath = path.join(directory, baseFileName);
     const baseData = loadJSONFile(baseFilePath);
 
+    let isSorted = true;
+
     // Sort the base data alphabetically by key (case insensitive)
     const sortedBaseData = {};
     Object.keys(baseData)
@@ -27,6 +32,15 @@ function updateJSONFiles(baseFileName, directory) {
         if (filename.endsWith('.json') && filename !== baseFileName) {
             let otherData = loadJSONFile(filePath);
 
+            // Check if keys are in alphabetical order
+            const keys = Object.keys(otherData);
+            for (let i = 1; i < keys.length; i++) {
+                if (keys[i].toLowerCase() < keys[i - 1].toLowerCase()) {
+                    isSorted = false;
+                    break;
+                }
+            }
+
             // Copy missing fields from the base data
             for (const key in sortedBaseData) {
                 if (!(key in otherData)) {
@@ -36,8 +50,7 @@ function updateJSONFiles(baseFileName, directory) {
 
             // Sort the other data alphabetically by key (case insensitive)
             const sortedOtherData = {};
-            Object.keys(otherData)
-                .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+            keys.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
                 .forEach(key => {
                     sortedOtherData[key] = otherData[key];
                 });
@@ -46,13 +59,25 @@ function updateJSONFiles(baseFileName, directory) {
         }
     });
 
-    // Save the sorted base data to its file
-    saveJSONFile(baseFilePath, sortedBaseData);
+    if (!isSorted) {
+        return 1; // Keys not in alphabetical order
+    } else {
+        return 0; // All files are in alphabetical order
+    }
 }
 
-// Get command line arguments
-const baseFileName = 'en-us.json';
-const directory = process.env.INPUT_DIRECTORY;
+try {
+    const baseFileName = 'en-us.json';
+    const directory = core.get_input('directory');
+    
+    // Example usage:
+    const resultCode = updateJSONFiles(baseFileName, directory);
 
-// Example usage:
-updateJSONFiles(baseFileName, directory);
+    // Check if keys were not in alphabetical order
+    if (resultCode == 1) {
+        core.setFailed('Keys not in alphabetical order');
+    }
+    
+} catch (error) {
+    core.setFailed(error.message);
+}
