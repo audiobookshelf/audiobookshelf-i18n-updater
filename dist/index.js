@@ -26644,6 +26644,7 @@ function updateJSONFiles(baseFileName, directory) {
                 }
             }
 
+            const keys = Object.keys(otherData);
             // Sort the other data alphabetically by key (case insensitive)
             const sortedOtherData = {};
             keys.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
