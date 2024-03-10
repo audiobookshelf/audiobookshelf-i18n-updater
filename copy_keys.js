@@ -63,11 +63,12 @@ function updateJSONFiles(baseFileName, directory) {
     }
 }
 
-const baseFileName = 'en-us.json';
 const directory = process.env.directory;
 
 // Example usage:
-const resultCode = updateJSONFiles(baseFileName, directory);
+console.log("Printing the directory");
+console.log(directory);
+const resultCode = updateJSONFiles(`en-us.json`, directory);
 
 // Check if keys were not in alphabetical order
 if (resultCode == 1) {
