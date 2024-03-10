@@ -63,7 +63,7 @@ function updateJSONFiles(baseFileName, directory) {
     }
 }
 
-const directory = process.env.directory;
+const directory = process.env.INPUT_directory;
 
 // Example usage:
 console.log("Printing the directory");

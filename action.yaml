@@ -10,5 +10,3 @@ inputs:
 runs:
   using: 'node20'
   main: 'copy_keys.js'
-  args:
-    - ${{inputs.directory}}
