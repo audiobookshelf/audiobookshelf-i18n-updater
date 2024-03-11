@@ -1,6 +1,8 @@
 # audiobookshelf-i18n-updater
 A GitHub action that validates the localization files are alphabetized and copies any missing keys from the English file.
 
+The script which copies missing keys ensures there is a newline at the end of each file to prevent the last line from being marked as a change whenever additional lines are added.
+
 ## Inputs
 
 ### `directory`
