@@ -3,6 +3,8 @@ A GitHub action that validates the localization files are alphabetized and copie
 
 The script which copies missing keys ensures there is a newline at the end of each file to prevent the last line from being marked as a change whenever additional lines are added.
 
+The action will exit with an error if any localization files do not have keys in alphabetical order.
+
 ## Inputs
 
 ### `directory`
