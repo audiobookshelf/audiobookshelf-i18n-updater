@@ -26608,10 +26608,6 @@ function updateJSONFiles(baseFileName, directory) {
     const baseFilePath = path.join(directory, baseFileName);
     const baseData = loadJSONFile(baseFilePath);
 
-    let isSorted = true;
-
-    console.log("In updateJSONFiles");
-
     // Sort the base data alphabetically by key (case insensitive)
     const sortedBaseData = {};
     Object.keys(baseData)
@@ -26629,8 +26625,7 @@ function updateJSONFiles(baseFileName, directory) {
             const keys = Object.keys(otherData);
             for (let i = 1; i < keys.length; i++) {
                 if (keys[i].toLowerCase() < keys[i - 1].toLowerCase()) {
-                    isSorted = false;
-                    break;
+                    throw new Error('Keys are not alphabetized in ' + filename);
                 }
             }
         }
@@ -26640,6 +26635,7 @@ function updateJSONFiles(baseFileName, directory) {
             // Copy missing fields from the base data
             for (const key in sortedBaseData) {
                 if (!(key in otherData)) {
+                    console.log(`Copying key '${key}' to '${filename}'`);
                     otherData[key] = sortedBaseData[key];
                 }
             }
@@ -26656,25 +26652,16 @@ function updateJSONFiles(baseFileName, directory) {
         }
     });
 
-    if (!isSorted) {
-        return 1; // Keys not in alphabetical order
-    } else {
-        return 0; // All files are in alphabetical order
-    }
 }
 
 const directory = core.getInput('directory');
 
-console.log("Printing the directory");
-console.log(directory);
-
-const resultCode = updateJSONFiles(`en-us.json`, directory);
-console.log("Result Code: ", resultCode);
-
-// Check if keys were not in alphabetical order
-if (resultCode == 1) {
-    console.log("Files are not alphabetized");
-    core.setFailed('Keys are not alphabetized');
+try {
+    updateJSONFiles(`en-us.json`, directory);
+    console.log("All files in alphabetical order");
+} catch (error) {
+    console.error(error.message);
+    core.setFailed(error.message);
 }
 
 })();
