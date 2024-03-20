@@ -15,8 +15,6 @@ function updateJSONFiles(baseFileName, directory) {
     const baseFilePath = path.join(directory, baseFileName);
     const baseData = loadJSONFile(baseFilePath);
 
-    console.log("In updateJSONFiles");
-
     // Sort the base data alphabetically by key (case insensitive)
     const sortedBaseData = {};
     Object.keys(baseData)
@@ -44,6 +42,7 @@ function updateJSONFiles(baseFileName, directory) {
             // Copy missing fields from the base data
             for (const key in sortedBaseData) {
                 if (!(key in otherData)) {
+                    console.log(`Copying key '${key}' to '${filename}'`);
                     otherData[key] = sortedBaseData[key];
                 }
             }
@@ -64,12 +63,9 @@ function updateJSONFiles(baseFileName, directory) {
 
 const directory = core.getInput('directory');
 
-console.log("Printing the directory");
-console.log(directory);
-
 try {
-    const resultCode = updateJSONFiles(`en-us.json`, directory);
-    console.log("Result Code: ", resultCode);
+    updateJSONFiles(`en-us.json`, directory);
+    console.log("All files in alphabetical order");
 } catch (error) {
     console.error(error.message);
     core.setFailed(error.message);
