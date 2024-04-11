@@ -22,6 +22,7 @@ with:
 ## Example Integration Workflow
 This workflow can be used to validate that all language files are alphabetized.
 Any language file being out of order will cause the workflow to throw an error.
+The workflow will also throw an error if any keys exists in a language file and do not exist in the base file.
 ```yaml
 name: Verify all i18n files are alphabetized
 

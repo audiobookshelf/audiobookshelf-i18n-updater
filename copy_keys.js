@@ -39,6 +39,13 @@ function updateJSONFiles(baseFileName, directory) {
         if (filename.endsWith('.json') && filename !== baseFileName) {
             let otherData = loadJSONFile(filePath);
 
+            // Check if there are keys in another langague that are not in the base English file
+            for (const key in otherData) {
+                if (!(key in sortedBaseData)) {
+                    throw new Error(`Key '${key}' found in '${filename}' but not in '${baseFileName}' file`);
+                }
+            }
+
             // Copy missing fields from the base data
             for (const key in sortedBaseData) {
                 if (!(key in otherData)) {
