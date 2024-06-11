@@ -12,6 +12,7 @@ function saveJSONFile(filePath, data) {
 }
 
 function updateJSONFiles(baseFileName, directory) {
+    /*
     const baseFilePath = path.join(directory, baseFileName);
     const baseData = loadJSONFile(baseFilePath);
 
@@ -22,6 +23,7 @@ function updateJSONFiles(baseFileName, directory) {
         .forEach(key => {
             sortedBaseData[key] = baseData[key];
         });
+    */
 
     fs.readdirSync(directory).forEach(filename => {
         const filePath = path.join(directory, filename);
@@ -31,11 +33,12 @@ function updateJSONFiles(baseFileName, directory) {
             // Check if keys are in alphabetical order
             const keys = Object.keys(otherData);
             for (let i = 1; i < keys.length; i++) {
-                if (keys[i].toLowerCase() < keys[i - 1].toLowerCase()) {
+                if (keys[i] < keys[i - 1]) {
                     throw new Error('Keys are not alphabetized in ' + filename);
                 }
             }
         }
+        /*
         if (filename.endsWith('.json') && filename !== baseFileName) {
             let otherData = loadJSONFile(filePath);
 
@@ -64,6 +67,7 @@ function updateJSONFiles(baseFileName, directory) {
 
             saveJSONFile(filePath, sortedOtherData);
         }
+        */
     });
 
 }
