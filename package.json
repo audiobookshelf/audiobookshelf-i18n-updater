@@ -1,6 +1,6 @@
 {
   "name": "audiobookshelf-i18n-updater",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "A GitHub action that validates the localization files are alphabetized and copies any missing keys from the English file",
   "main": "index.js",
   "scripts": {
